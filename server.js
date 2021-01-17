@@ -1,11 +1,17 @@
 const express = require('express');
+// tells server to use required port when necessary 
+// or designated port otherwise (in this case 3001)
 const PORT = process.env.PORT || 3001;
 const app = express();
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
+// give HTTP easy access to front end assets
+app.use(express.static('public'));
+// import data from file
 const { animals } = require('./data/animals');
+//require PATH and FILESYSTEM modules
 const path = require('path');
 const fs = require('fs');
 
@@ -116,10 +122,13 @@ app.post('/api/animals', (req, res) => {
     }
 });
 
+// root route 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+  });
+// ====================================================
+// LISTEN
+// ====================================================
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  });
