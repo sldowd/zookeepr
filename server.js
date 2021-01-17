@@ -122,10 +122,26 @@ app.post('/api/animals', (req, res) => {
     }
 });
 
-// root route 
+// root/base route (landing page)
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
-  });
+});
+
+// get 'animals.html'
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+// get 'zookeepers,html'
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+// wildcard route
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
 // ====================================================
 // LISTEN
 // ====================================================
